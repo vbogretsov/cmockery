@@ -10,7 +10,7 @@ $ clib install vbogretsov/cmockery
 
 ## Documentation
 
-See [cmockery docs](https://github.com/google/cmockery).
+See [cmockery docs](https://github.com/google/cmockery#cmockery-unit-testing-framework).
 
 ## Licence
 
