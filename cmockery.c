@@ -28,12 +28,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #ifdef _WIN32
 #include <windows.h>
 #endif // _WIN32
 #include "cmockery.h"
-
-#include <console-colors/console-colors.h>
 
 #ifdef _WIN32
 #define vsnprintf _vsnprintf
@@ -1596,14 +1595,14 @@ int _run_test(
 #endif // !_WIN32
     }
 
-    // TMP
-    // if (function_type == UNIT_TEST_FUNCTION_TYPE_TEST) {
-    //     print_message("%s: Starting test\n", function_name);
-    // }
     initialize_testing(function_name);
     global_running_test = 1;
     if (setjmp(global_run_test_env) == 0) {
+        clock_t start = clock();
         Function(state ? state : &current_state);
+        clock_t stop = clock();
+        double duration = (double)(stop - start) / CLOCKS_PER_SEC;
+
         fail_if_leftover_values(function_name);
 
         /* If this is a setup function then ignore any allocated blocks
@@ -1615,18 +1614,12 @@ int _run_test(
         global_running_test = 0;
 
         if (function_type == UNIT_TEST_FUNCTION_TYPE_TEST) {
-            // TMP
-            // print_message("%s: Test completed successfully.\n", function_name);
-            // print_message("[P]: %s\n", function_name);
-            cc_fprintf(CC_FG_GREEN, stdout, "[P]: %s\n", function_name);
+            print_message("PAS %f %s\n", function_name, duration);
         }
         rc = 0;
     } else {
         global_running_test = 0;
-        // TMP
-        // print_message("%s: Test failed.\n", function_name);
-        // print_message("[F]: %s\n", function_name);
-        cc_fprintf(CC_FG_RED, stdout, "[F]: %s\n", function_name);
+        print_error("FAL %f %s\n\n", function_name);
     }
     teardown_testing(function_name);
 
