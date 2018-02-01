@@ -9,5 +9,10 @@
     "unit",
     "test"
   ],
-  "install": "./configure"
+  "src": [
+      "cmockery.h",
+      "cmockery.c",
+      "config.h.in",
+      "configure"
+  ]
 }
