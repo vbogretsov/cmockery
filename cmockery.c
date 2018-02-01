@@ -1594,9 +1594,10 @@ int _run_test(
 #endif // !_WIN32
     }
 
-    if (function_type == UNIT_TEST_FUNCTION_TYPE_TEST) {
-        print_message("%s: Starting test\n", function_name);
-    }
+    // TMP
+    // if (function_type == UNIT_TEST_FUNCTION_TYPE_TEST) {
+    //     print_message("%s: Starting test\n", function_name);
+    // }
     initialize_testing(function_name);
     global_running_test = 1;
     if (setjmp(global_run_test_env) == 0) {
@@ -1612,12 +1613,16 @@ int _run_test(
         global_running_test = 0;
 
         if (function_type == UNIT_TEST_FUNCTION_TYPE_TEST) {
-            print_message("%s: Test completed successfully.\n", function_name);
+            // TMP
+            // print_message("%s: Test completed successfully.\n", function_name);
+            print_message("[P]: %s\n", function_name);
         }
         rc = 0;
     } else {
         global_running_test = 0;
-        print_message("%s: Test failed.\n", function_name);
+        // TMP
+        // print_message("%s: Test failed.\n", function_name);
+        print_message("[F]: %s\n", function_name);
     }
     teardown_testing(function_name);
 
