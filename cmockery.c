@@ -1618,7 +1618,7 @@ int _run_test(
             // TMP
             // print_message("%s: Test completed successfully.\n", function_name);
             // print_message("[P]: %s\n", function_name);
-            cc_printf(CC_FG_GREEN, "[P]: %s\n", function_name);
+            cc_fprintf(CC_FG_GREEN, stdout, "[P]: %s\n", function_name);
         }
         rc = 0;
     } else {
@@ -1626,7 +1626,7 @@ int _run_test(
         // TMP
         // print_message("%s: Test failed.\n", function_name);
         // print_message("[F]: %s\n", function_name);
-        cc_printf(CC_FG_RED, "[F]: %s\n", function_name);
+        cc_fprintf(CC_FG_RED, stdout, "[F]: %s\n", function_name);
     }
     teardown_testing(function_name);
 
