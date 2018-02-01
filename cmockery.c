@@ -33,6 +33,8 @@
 #endif // _WIN32
 #include "cmockery.h"
 
+#include <console-colors/console-colors.h>
+
 #ifdef _WIN32
 #define vsnprintf _vsnprintf
 #endif // _WIN32
@@ -1615,14 +1617,16 @@ int _run_test(
         if (function_type == UNIT_TEST_FUNCTION_TYPE_TEST) {
             // TMP
             // print_message("%s: Test completed successfully.\n", function_name);
-            print_message("[P]: %s\n", function_name);
+            // print_message("[P]: %s\n", function_name);
+            cc_printf(CC_FG_GREEN, "[P]: %s\n", function_name);
         }
         rc = 0;
     } else {
         global_running_test = 0;
         // TMP
         // print_message("%s: Test failed.\n", function_name);
-        print_message("[F]: %s\n", function_name);
+        // print_message("[F]: %s\n", function_name);
+        cc_printf(CC_FG_RED, "[F]: %s\n", function_name);
     }
     teardown_testing(function_name);
 

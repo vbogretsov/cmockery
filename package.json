@@ -14,5 +14,8 @@
     "cmockery.c",
     "config.h.in",
     "configure"
-  ]
+  ],
+  "dependencies": {
+    "Constellation/console-colors.c": "1.0.3"
+  }
 }
