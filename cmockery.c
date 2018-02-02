@@ -666,7 +666,7 @@ LargestIntegralType _mock(const char * const function, const char* const file,
         }
         return value;
     } else {
-        print_error("ERROR: " SOURCE_LOCATION_FORMAT " - Could not get value "
+        print_error("ERR: " SOURCE_LOCATION_FORMAT " - Could not get value "
                     "to mock function %s\n", file, line, function);
         if (source_location_is_set(&global_last_mock_value_location)) {
             print_error("Previously returned mock value was declared at "
@@ -1181,7 +1181,7 @@ void _check_expected(
             free(check);
         }
         if (!check_succeeded) {
-            print_error("ERROR: Check of parameter %s, function %s failed\n"
+            print_error("ERR: Check of parameter %s, function %s failed\n"
                         "Expected parameter declared at "
                         SOURCE_LOCATION_FORMAT "\n",
                         parameter_name, function_name,
@@ -1190,7 +1190,7 @@ void _check_expected(
             _fail(file, line);
         }
     } else {
-        print_error("ERROR: " SOURCE_LOCATION_FORMAT " - Could not get value "
+        print_error("ERR: " SOURCE_LOCATION_FORMAT " - Could not get value "
                     "to check parameter %s of function %s\n", file, line,
                     parameter_name, function_name);
         if (source_location_is_set(&global_last_parameter_location)) {
@@ -1472,7 +1472,7 @@ static void fail_if_blocks_allocated(const ListNode * const check_point,
     const int allocated_blocks = display_allocated_blocks(check_point);
     if (allocated_blocks) {
         free_allocated_blocks(check_point);
-        print_error("ERROR: %s leaked %d block(s)\n", test_name,
+        print_error("ERR: %s leaked %d block(s)\n", test_name,
                     allocated_blocks);
         exit_test(1);
     }
@@ -1480,7 +1480,7 @@ static void fail_if_blocks_allocated(const ListNode * const check_point,
 
 
 void _fail(const char * const file, const int line) {
-    print_error("ERROR: " SOURCE_LOCATION_FORMAT " Failure!\n", file, line);
+    print_error("ERR: " SOURCE_LOCATION_FORMAT " Failure!\n", file, line);
     exit_test(1);
 }
 
@@ -1549,22 +1549,8 @@ void vprint_error(const char* const format, va_list args) {
 #endif // _WIN32
 }
 
-
-void print_message(const char* const format, ...) {
-    va_list args;
-    va_start(args, format);
-    vprint_message(format, args);
-    va_end(args);
-}
-
-
-void print_error(const char* const format, ...) {
-    va_list args;
-    va_start(args, format);
-    vprint_error(format, args);
-    va_end(args);
-}
-
+extern void print_message(const char* const format, ...);
+extern void print_error(const char* const format, ...);
 
 int _run_test(
         const char * const function_name,  const UnitTestFunction Function,
@@ -1619,7 +1605,7 @@ int _run_test(
         rc = 0;
     } else {
         global_running_test = 0;
-        print_error("FAL %f %s\n\n", function_name);
+        print_error("FAL %f %s\n", function_name);
     }
     teardown_testing(function_name);
 
