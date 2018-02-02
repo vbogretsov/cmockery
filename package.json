@@ -12,6 +12,7 @@
   "src": [
     "cmockery.h",
     "cmockery.c",
+    "pprint.c",
     "config.h.in",
     "configure"
   ]
